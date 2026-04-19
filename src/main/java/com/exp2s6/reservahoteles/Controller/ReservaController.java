@@ -2,6 +2,7 @@ package com.exp2s6.reservahoteles.Controller;
 
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,7 +51,7 @@ public class ReservaController {
 
     //Controlador para eliminar una reserva por su ID
     @DeleteMapping("/{id}")
-    public boolean deleteReserva(@PathVariable Long id) {
+    public ResponseEntity<?> deleteReserva(@PathVariable Long id) {
         boolean fueEliminado = reservaService.deleteReserva(id);
         
         if (!fueEliminado) {
@@ -58,7 +59,7 @@ public class ReservaController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error: la ID informada no existe.");
         }
         // Si llegó hasta aquí, fueEliminado es true
-        throw new ResponseStatusException(HttpStatus.OK, "Reserva eliminada exitosamente.");
+        return ResponseEntity.ok("Reserva eliminada exitosamente.");
     }
 
 }
