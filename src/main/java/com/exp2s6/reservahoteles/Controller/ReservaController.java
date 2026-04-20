@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import com.exp2s6.reservahoteles.Model.Reserva;
 import com.exp2s6.reservahoteles.Service.ReservaService;
 
-
 import java.util.List;
 import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 @RestController
@@ -19,6 +21,8 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 
 public class ReservaController {
+
+    private static final Logger log = LoggerFactory.getLogger(ReservaController.class);
     
     @Autowired
     private ReservaService reservaService;
@@ -26,18 +30,21 @@ public class ReservaController {
     // Controlador para obtener todas las reservas
     @GetMapping 
     public List<Reserva> getAllReservas() {
+        log.info("GET /reservas - Obteniendo todas las reservas");
         return reservaService.getAllReservas();
     }
 
     // Controlador para obtener una reserva por su ID
     @GetMapping("/{id}")
     public Optional<Reserva> getReservaById(@PathVariable Long id) {
+        log.info("GET /reservas/{} - Obteniendo reserva por ID", id);
         return reservaService.getReservaById(id);
     }
 
     // Controlador para crear una nueva reserva
     @PostMapping
     public Reserva crearReserva(@RequestBody Reserva reserva) {
+        log.info("POST /reservas - Creando nueva reserva: {}", reserva);
         return reservaService.createReserva(reserva);
 
     }
@@ -45,6 +52,7 @@ public class ReservaController {
     //Controlador para actualizar una reserva existente
     @PutMapping("/{id}")
     public Reserva updateReserva(@PathVariable Long id, @RequestBody Reserva reservaDetalles) {
+        log.info("PUT /reservas/{} - Actualizando reserva", id);    
         return reservaService.updateReserva(id, reservaDetalles)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error: la ID informada no existe."));    
     }
@@ -52,6 +60,7 @@ public class ReservaController {
     //Controlador para eliminar una reserva por su ID
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteReserva(@PathVariable Long id) {
+        log.info("DELETE /reservas/{} - Eliminando reserva", id);
         boolean fueEliminado = reservaService.deleteReserva(id);
         
         if (!fueEliminado) {
