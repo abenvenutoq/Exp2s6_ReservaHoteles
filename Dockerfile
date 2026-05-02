@@ -16,7 +16,7 @@ RUN mvn clean package
 
 FROM eclipse-temurin:22-jdk 
 
-COPY --from=buildstage /app/target/bdget-0.0.1-SNAPSHOT.jar /app/bdget.jar
+COPY --from=buildstage /app/target/reservahoteles-0.0.1-SNAPSHOT.jar /app/reservahoteles.jar
 
 COPY Wallet_BDExp1S1 /app/wallet
 
@@ -24,6 +24,6 @@ ENV TNS_ADMIN=/app/wallet
 
 EXPOSE 8080
 
-ENTRYPOINT [ "java", "-jar","/app/bdget.jar" ]
+ENTRYPOINT [ "java", "-jar","/app/reservahoteles.jar" ]
 
 #docker-compose up LO QUE DEBEMOS USAR EN LA TERMINAL PARA LEVANTAR NUESTRA APLICACION EN DOCKER 
