@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonPropertyOrder({"id", "fechaReserva", "numeroHabitacion", "nombreCliente", "fechaIngreso", "fechaSalida"})
 
-
 @Entity
 @Table(name = "reservas")   
 public class Reserva {
