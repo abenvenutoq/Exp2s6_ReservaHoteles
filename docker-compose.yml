@@ -1,4 +1,3 @@
-version: '1'
 
 services:
  microservicio:
@@ -6,9 +5,9 @@ services:
    context: .
    dockerfile: Dockerfile
   ports:
-   - "8080:8080"
+   - "8081:8081"
   environment:
-   - spring.datasource.url=jdbc:oracle:thin:@bdexp1s1_tp?TNS_ADMIN=/app/wallet
-   - spring.datasource.username=DSY2201_S6
-   - spring.datasource.password=ActSum.S6_DSY
+   - spring.datasource.url=jdbc:oracle:thin:@bdexp1s1_tp?TNS_ADMIN=/reservahoteles/wallet
+   - spring.datasource.username=DSY2201_S8_Reservas
+   - spring.datasource.password=ActForm.S8_DSY
   restart: always

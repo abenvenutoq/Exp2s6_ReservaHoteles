@@ -47,26 +47,18 @@ public class ReservaServiceTest {
         reservaMock = null;
     }
 
-    // --- Tests para getAllReservas ---
-
     @Test
     void testGetAllReservas() {
-        // Given
         when(reservaRepository.findAll()).thenReturn(Arrays.asList(reservaMock));
 
-        // When
         List<Reserva> resultado = reservaService.getAllReservas();
 
-        // Then
         assertNotNull(resultado);
         assertEquals(1, resultado.size());
         assertEquals("Angelo Benvenuto", resultado.get(0).getNombreCliente());
         
-        // Verifica que el repositorio fue llamado exactamente una vez
         verify(reservaRepository, times(1)).findAll();
     }
-
-    // --- Tests para getReservaById ---
 
     @Test
     void testGetReservaById() {
@@ -79,8 +71,6 @@ public class ReservaServiceTest {
         assertEquals(202, resultado.get().getNumeroHabitacion());
     }
 
-    // --- Tests para createReserva ---
-
     @Test
     void testCreateReserva() {
         when(reservaRepository.save(any(Reserva.class))).thenReturn(reservaMock);
@@ -92,13 +82,10 @@ public class ReservaServiceTest {
         assertEquals("Angelo Benvenuto", resultado.getNombreCliente());
     }
 
-    // --- Tests para updateReserva ---
-
     @Test
     void testUpdateReserva_Exitosa() {
-        // Simulamos que la ID sí existe en la base de datos
         when(reservaRepository.existsById(1L)).thenReturn(true);
-        // Simulamos el guardado
+
         when(reservaRepository.save(any(Reserva.class))).thenReturn(reservaMock);
 
         Optional<Reserva> resultado = reservaService.updateReserva(1L, reservaMock);
@@ -112,44 +99,35 @@ public class ReservaServiceTest {
 
     @Test
     void testUpdateReserva_NoEncontrada() {
-        // Simulamos que la ID NO existe
         when(reservaRepository.existsById(1L)).thenReturn(false);
 
         Optional<Reserva> resultado = reservaService.updateReserva(1L, reservaMock);
 
-        assertFalse(resultado.isPresent()); // Debe devolver un Optional.empty()
+        assertFalse(resultado.isPresent());
         
-        // Verificamos que al no existir, NUNCA se llame al método save
         verify(reservaRepository, never()).save(any(Reserva.class));
     }
 
-    // --- Tests para deleteReserva ---
-
     @Test
     void testDeleteReserva_Exitosa() {
-        // Simulamos que la ID sí existe
         when(reservaRepository.existsById(1L)).thenReturn(true);
-        // No necesitamos simular deleteById porque es un método void y Mockito por defecto no hace nada
 
         boolean resultado = reservaService.deleteReserva(1L);
 
         assertTrue(resultado);
-        
-        // Verificamos que se haya ejecutado la comprobación y luego la eliminación
+
         verify(reservaRepository).existsById(1L);
         verify(reservaRepository).deleteById(1L);
     }
 
     @Test
     void testDeleteReserva_NoEncontrada() {
-        // Simulamos que la ID NO existe
         when(reservaRepository.existsById(1L)).thenReturn(false);
 
         boolean resultado = reservaService.deleteReserva(1L);
 
         assertFalse(resultado);
         
-        // Verificamos que al no existir, NUNCA se intente eliminar
         verify(reservaRepository, never()).deleteById(anyLong());
     }
 }
