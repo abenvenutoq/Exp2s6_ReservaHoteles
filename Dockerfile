@@ -25,5 +25,3 @@ ENV TNS_ADMIN=/reservahoteles/wallet
 EXPOSE 8081
 
 ENTRYPOINT [ "java", "-jar","/reservahoteles/reservahoteles.jar" ]
-
-#docker-compose up LO QUE DEBEMOS USAR EN LA TERMINAL PARA LEVANTAR NUESTRA APLICACION EN DOCKER 
