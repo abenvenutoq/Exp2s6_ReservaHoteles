@@ -22,7 +22,7 @@ COPY Wallet_BDExp1S1 /reservahoteles/wallet
 
 ENV TNS_ADMIN=/reservahoteles/wallet
 
-EXPOSE 8080
+EXPOSE 8081
 
 ENTRYPOINT [ "java", "-jar","/reservahoteles/reservahoteles.jar" ]
 
